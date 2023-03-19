@@ -21,28 +21,13 @@ class Categoryspecial extends Module
 
         parent::__construct();
 
-        $this->displayName = $this->trans(
-            'Category special',
-            [],
-            'Modules.Categoryspecial.Admin'
-        );
-
-        $this->description =
-            $this->trans(
-                'Category special',
-                [],
-                'Modules.Categoryspecial.Admin'
-            );
+        $this->displayName = $this->l('Category special');
+        $this->description = $this->displayName;
 
         $this->ps_versions_compliancy = [
             'min' => '1.7.6.0',
             'max' => '8.99.99',
         ];
-    }
-
-    public function isUsingNewTranslationSystem()
-    {
-        return true;
     }
 
     public function install()
@@ -65,7 +50,7 @@ class Categoryspecial extends Module
             ->addAfter(
                 'active',
                 (new ToggleColumn('is_special'))
-                    ->setName($this->trans('Is special category?', [], 'Modules.Categoryspecial.Admin'))
+                    ->setName($this->l('Is special category?'))
                     ->setOptions([
                         'field' => 'is_special',
                         'primary_field' => 'id_category',
@@ -116,7 +101,7 @@ class Categoryspecial extends Module
     {
         $formBuilder = $params['form_builder'];
         $formBuilder->add('is_special', SwitchType::class, [
-            'label' => $this->trans('Is special category?', [], 'Modules.Categoryspecial.Admin'),
+            'label' => $this->l('Is special category?'),
             'required' => false,
         ]);
 
@@ -127,6 +112,11 @@ class Categoryspecial extends Module
         $params['data']['is_special'] = $settings->isSpecial();
 
         $formBuilder->setData($params['data']);
+    }
+
+    public function isUsingNewTranslationSystem()
+    {
+        return false;
     }
 
     public function hookActionAfterUpdateCategoryFormHandler(array $params)
@@ -174,16 +164,8 @@ class Categoryspecial extends Module
     private function handleException(CategorySpecialException $exception)
     {
         $exceptionDictionary = [
-            CannotCreateCategorySpecialException::class => $this->trans(
-                'Failed to create a record for category',
-                [],
-                'Modules.Categoryspecial.Admin'
-            ),
-            CannotToggleCategorySpecialStatusException::class => $this->trans(
-                'Failed to toggle is special category status',
-                [],
-                'Modules.Categoryspecial.Admin'
-            ),
+            CannotCreateCategorySpecialException::class => 'Failed to create a record for category',
+            CannotToggleCategorySpecialStatusException::class => 'Failed to toggle is special category status',
         ];
 
         $exceptionType = get_class($exception);
@@ -191,16 +173,21 @@ class Categoryspecial extends Module
         if (isset($exceptionDictionary[$exceptionType])) {
             $message = $exceptionDictionary[$exceptionType];
         } else {
-            $message = $this->trans(
-                'An unexpected error occurred. [%type% code %code%]',
-                [
-                    '%type%' => $exceptionType,
-                    '%code%' => $exception->getCode(),
-                ],
-                'Admin.Notifications.Error'
-            );
+            $message = 'An unexpected error occurred';
         }
 
         throw new \PrestaShop\PrestaShop\Core\Module\Exception\ModuleErrorException($message);
+    }
+
+    public function getMessage($text)
+    {
+        $translation = [
+            'The special category status had been updated.' => $this->l('The special category status had been updated.'),
+            'Something bad happened when trying to get category id.' => $this->l('Something bad happened when trying to get category id.'),
+            'Failed to create special category.' => $this->l('Failed to create special category.'),
+            'An error occurred while updating the status.' => $this->l('An error occurred while updating the status.'),
+        ];
+
+        return $translation[$text] ?? $text;
     }
 }
