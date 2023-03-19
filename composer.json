@@ -1,0 +1,10 @@
+{
+  "name": "kamil/categoryspecial",
+  "autoload": {
+    "psr-4": {
+      "Kamil\\CategorySpecial\\": "src/"
+    }
+  },
+  "license": "MIT",
+  "type": "prestashop-module"
+}

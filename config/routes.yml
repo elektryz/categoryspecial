@@ -1,0 +1,8 @@
+# @see https://devdocs.prestashop.com/1.7/modules/concepts/controllers/admin-controllers/#how-to-map-an-action-of-your-controller-to-a-uri
+categoryspecial_toggle_category_special:
+  path: category-special/{categoryId}
+  methods: [POST]
+  defaults:
+    _controller: 'Kamil\CategorySpecial\Controller\Admin\CategorySpecialController::toggleCategorySpecialAction'
+  requirements:
+    categoryId: \d+

@@ -1,0 +1,6 @@
+vendor/
+composer.lock
+.idea
+js/node_modules
+config.xml
+config_*.xml

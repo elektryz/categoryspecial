@@ -1,0 +1,33 @@
+services:
+  _defaults:
+    public: true
+#  @see  https://devdocs.prestashop.com/1.7/development/architecture/migration-guide/forms/cqrs-usage-in-forms/ for CQRS pattern usage examples.
+  categoryspecial.domain.reviewer.command_handler.toggle_category_special_handler:
+    class: 'Kamil\CategorySpecial\Domain\Reviewer\CommandHandler\ToggleCategorySpecialHandler'
+    arguments:
+      - '@categoryspecial.repository.categoryspecial'
+    tags:
+      - name: tactician.handler
+        command: 'Kamil\CategorySpecial\Domain\Reviewer\Command\ToggleCategorySpecialCommand'
+
+  categoryspecial.domain.reviewer.query_handler.get_category_special_settings_for_form_handler:
+    class: 'Kamil\CategorySpecial\Domain\Reviewer\QueryHandler\GetCategorySpecialSettingsForFormHandler'
+    arguments:
+      - '@categoryspecial.repository.categoryspecial'
+    tags:
+      - name: tactician.handler
+        command: 'Kamil\CategorySpecial\Domain\Reviewer\Query\GetCategorySpecialSettingsForForm'
+
+  categoryspecial.domain.reviewer.command_handler.update_category_special_handler:
+    class: 'Kamil\CategorySpecial\Domain\Reviewer\CommandHandler\UpdateCategorySpecialHandler'
+    arguments:
+      - '@categoryspecial.repository.categoryspecial'
+    tags:
+      - name: tactician.handler
+        command: 'Kamil\CategorySpecial\Domain\Reviewer\Command\UpdateCategorySpecialCommand'
+
+  categoryspecial.repository.categoryspecial:
+    class: 'Kamil\CategorySpecial\Repository\CategorySpecialRepository'
+    arguments:
+      - '@doctrine.dbal.default_connection'
+      - '%database_prefix%'
