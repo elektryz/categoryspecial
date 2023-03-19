@@ -2,17 +2,10 @@
 
 use Kamil\CategorySpecial\Domain\Reviewer\Command\UpdateCategorySpecialCommand;
 use Kamil\CategorySpecial\Domain\Reviewer\Query\GetCategorySpecialSettingsForForm;
-// Kamil\CategorySpecial\Domain\Reviewer\QueryResult\CategorySpecialSettingsForForm;
-//use Doctrine\DBAL\Query\QueryBuilder;
-use PrestaShop\PrestaShop\Core\CommandBus\CommandBusInterface;
 use PrestaShop\PrestaShop\Core\Grid\Column\Type\Common\ToggleColumn;
-use PrestaShop\PrestaShop\Core\Grid\Definition\GridDefinitionInterface;
 use PrestaShop\PrestaShop\Core\Grid\Filter\Filter;
-//use PrestaShop\PrestaShop\Core\Search\Filters\CustomerFilters;
 use PrestaShopBundle\Form\Admin\Type\SwitchType;
 use PrestaShopBundle\Form\Admin\Type\YesAndNoChoiceType;
-use Symfony\Component\Form\FormBuilderInterface;
-use Symfony\Component\HttpFoundation\Request;
 use Kamil\CategorySpecial\Domain\Reviewer\Exception\CategorySpecialException;
 use Kamil\CategorySpecial\Domain\Reviewer\Exception\CannotCreateCategorySpecialException;
 use Kamil\CategorySpecial\Domain\Reviewer\Exception\CannotToggleCategorySpecialStatusException;
