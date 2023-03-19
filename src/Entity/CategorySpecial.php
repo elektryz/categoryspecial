@@ -4,6 +4,8 @@ namespace Kamil\CategorySpecial\Entity;
 
 use PrestaShop\PrestaShop\Adapter\Entity\ObjectModel;
 
+use Db;
+
 class CategorySpecial extends ObjectModel
 {
     public $id_category;
@@ -17,4 +19,11 @@ class CategorySpecial extends ObjectModel
             'is_special' => ['type' => self::TYPE_BOOL, 'validate' => 'isBool'],
         ],
     ];
+
+    public static function isSpecial($idCategory)
+    {
+        return (bool)Db::getInstance()->getValue(
+            'SELECT is_special FROM '._DB_PREFIX_.'category_special WHERE id_category='.(int)$idCategory
+        );
+    }
 }
